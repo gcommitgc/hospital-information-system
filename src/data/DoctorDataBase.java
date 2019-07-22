@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class DoctorDataBase {
 
+	@SuppressWarnings("unchecked")
 	private static ArrayList<Doctor> doctors=(ArrayList<Doctor>)ReadUtil.read("c:/documents/doctordata.txt");
 	private static DoctorDataBase doctorDataBase;
     private DoctorDataBase (){}
@@ -14,7 +15,7 @@ public class DoctorDataBase {
     	}
     	return doctorDataBase;
     }
-    public void Sava() {
-    	SaveUtil.save(doctors,"c:/documents/doctordata.txt");
-    }
+//    public void Sava() {
+//    	SaveUtil.save(doctors,"c:/documents/doctordata.txt");
+//    }
 }

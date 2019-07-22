@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class OfficeDataBase {
 
 	@SuppressWarnings("unchecked")
-	private ArrayList<Office> offices=(ArrayList<Office>)ReadUtil.read("c:/documents/officedata.txt");
+	private static ArrayList<Office> offices=(ArrayList<Office>)ReadUtil.read("c:/documents/officedata.txt");
 	private static OfficeDataBase officeDataBase;  
     private OfficeDataBase (){}  
     public static synchronized OfficeDataBase getInstance() {  
@@ -24,7 +24,7 @@ public class OfficeDataBase {
     public void Save() {
     	SaveUtil.save(offices,"c:/documents/officedata.txt");
     }
-	public ArrayList<Office> getOffices() {
+	public static ArrayList<Office> getOffices() {
 		return offices;
 	}
 	public void setOffices(ArrayList<Office> offices) {

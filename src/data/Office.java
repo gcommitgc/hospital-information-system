@@ -20,6 +20,9 @@ public class Office implements Serializable{
 		this.name = name;
 		this.doctors = doctors;
 	}
+	public Office(String name) {
+		this.name=name;
+	}
 	
 	public String getName() {
 		return name;

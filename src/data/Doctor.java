@@ -13,6 +13,18 @@ public class Doctor implements Serializable{
 	private Boolean level;
 	private ArrayList<Registration> registrations=new ArrayList<>();
 	
+	public Boolean onWork() {
+		Date now=new Date();
+		try {
+			if((now.after(startDate)&&(now.before(endDate)))) {
+				return true;
+			}
+		}
+		catch(NullPointerException e) {
+			
+		}
+		return false;
+	}
 	public ArrayList<Registration> getRegistrations() {
 		return registrations;
 	}

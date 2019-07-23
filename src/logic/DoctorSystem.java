@@ -8,8 +8,15 @@ public class DoctorSystem {
 	RegistrationDataBase registrations=RegistrationDataBase.getInstance();
 	OfficeDataBase offices=OfficeDataBase.getInstance();
 	
-	public DoctorSystem(Doctor doctor) {
-		this.doctor=doctor;
+	public DoctorSystem(String doctorName) {
+		for(Office office:offices.getOffices()) {
+			for(Doctor doctor:office.getDoctors()) {
+				if(doctorName.equals(doctor.getName())) {
+					this.doctor=doctor;
+					break;
+				}
+			}
+		}
 	}
 	
 	public Object[][] displayFinishedRegistration() {

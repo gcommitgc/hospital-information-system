@@ -20,5 +20,17 @@ public class Account {
 		this.accountAndPassword = accountAndPassword;
 		this.accountAndUser = accountAndUser;
 	}
+	public HashMap<String, String> getAccountAndPassword() {
+		return accountAndPassword;
+	}
+	public void setAccountAndPassword(HashMap<String, String> accountAndPassword) {
+		this.accountAndPassword = accountAndPassword;
+	}
+	public HashMap<String, String> getAccountAndUser() {
+		return accountAndUser;
+	}
+	public void setAccountAndUser(HashMap<String, String> accountAndUser) {
+		this.accountAndUser = accountAndUser;
+	}
 	
 }

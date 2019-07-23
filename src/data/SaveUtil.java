@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public abstract class SaveUtil {
-	public static void save(ArrayList data,String location){
+	public static void save(Object data,String location){
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
     	try {

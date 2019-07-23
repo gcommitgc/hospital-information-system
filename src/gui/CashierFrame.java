@@ -3,36 +3,26 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import data.Doctor;
-import data.Office;
-import data.OfficeDataBase;
-import logic.RegisterSystem;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class RegisterFrame extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+public class CashierFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -48,7 +38,6 @@ public class RegisterFrame extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_6;
 	private JTextField textField_8;
-	JComboBox comboBox_4;
 
 	/**
 	 * Launch the application.
@@ -57,7 +46,7 @@ public class RegisterFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisterFrame frame = new RegisterFrame();
+					CashierFrame frame = new CashierFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,10 +58,7 @@ public class RegisterFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegisterFrame() {
-		RegisterSystem registerSystem=RegisterSystem.getInstance();
-		OfficeDataBase offices=OfficeDataBase.getInstance();
-		
+	public CashierFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		setBounds(100, 100, 541, 414);
@@ -88,8 +74,8 @@ public class RegisterFrame extends JFrame {
         int screenWidth = screenSize.width; 
         int screenHeight = screenSize.height; 
         this.setLocation(screenWidth/2-windowWidth/2, screenHeight/2-windowHeight/2);
-		
-		panel_3_1 = new JPanel();
+        
+        panel_3_1 = new JPanel();
 		panel_3_1.setBounds(0, 34, 519, 324);
 		panel_3_1.setVisible(false);
 		contentPane.add(panel_3_1);
@@ -142,53 +128,53 @@ public class RegisterFrame extends JFrame {
 		JMenu mnNewMenu = new JMenu("\u529F\u80FD");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem menuItem = new JMenuItem("\u6302\u53F7");
-		menuItem.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				panel_1_1.setVisible(false);
-				panel_2_1.setVisible(false);
-				panel_3_1.setVisible(false);
-				panel.setVisible(true);
-			}
-		});
-		mnNewMenu.add(menuItem);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("\u9000\u53F7");
-		mntmNewMenuItem.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				panel_2_1.setVisible(false);
-				panel_3_1.setVisible(false);
-				panel.setVisible(false);
-				panel_1_1.setVisible(true);
-			}
-		});
-		mnNewMenu.add(mntmNewMenuItem);
-		
-//		JMenuItem menuItem_1 = new JMenuItem("\u9000\u8D39");
-//		menuItem_1.addMouseListener(new MouseAdapter() {
+//		JMenuItem menuItem = new JMenuItem("\u6302\u53F7");
+//		menuItem.addMouseListener(new MouseAdapter() {
 //			@Override
 //			public void mousePressed(MouseEvent e) {
-//				panel_3_1.setVisible(false);
-//				panel.setVisible(false);
-//				panel_1_1.setVisible(false);
-//				panel_2_1.setVisible(true);
-//			}
-//		});
-//		mnNewMenu.add(menuItem_1);
-		
-//		JMenuItem menuItem_2 = new JMenuItem("\u7F34\u8D39");
-//		menuItem_2.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				panel.setVisible(false);
 //				panel_1_1.setVisible(false);
 //				panel_2_1.setVisible(false);
-//				panel_3_1.setVisible(true);
+//				panel_3_1.setVisible(false);
+////				panel.setVisible(true);
 //			}
 //		});
-//		mnNewMenu.add(menuItem_2);
+//		mnNewMenu.add(menuItem);
+		
+//		JMenuItem mntmNewMenuItem = new JMenuItem("\u9000\u53F7");
+//		mntmNewMenuItem.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				panel_2_1.setVisible(false);
+//				panel_3_1.setVisible(false);
+////				panel.setVisible(false);
+//				panel_1_1.setVisible(true);
+//			}
+//		});
+//		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenuItem menuItem_1 = new JMenuItem("\u9000\u8D39");
+		menuItem_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				panel_3_1.setVisible(false);
+//				panel.setVisible(false);
+				panel_1_1.setVisible(false);
+				panel_2_1.setVisible(true);
+			}
+		});
+		mnNewMenu.add(menuItem_1);
+		
+		JMenuItem menuItem_2 = new JMenuItem("\u7F34\u8D39");
+		menuItem_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+//				panel.setVisible(false);
+				panel_1_1.setVisible(false);
+				panel_2_1.setVisible(false);
+				panel_3_1.setVisible(true);
+			}
+		});
+		mnNewMenu.add(menuItem_2);
 		
 		JMenu mnNewMenu_1 = new JMenu("\u8D26\u6237");
 		menuBar.add(mnNewMenu_1);
@@ -233,8 +219,8 @@ public class RegisterFrame extends JFrame {
 		});
 		btnNewButton.setBounds(172, 215, 150, 58);
 		panel_1_1.add(btnNewButton);
-		contentPane.add(panel);
-		panel.setLayout(null);
+//		contentPane.add(panel);
+//		panel.setLayout(null);
 		
 		textField = new JTextField();
 		textField.setBounds(95, 31, 96, 27);
@@ -280,8 +266,6 @@ public class RegisterFrame extends JFrame {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(95, 73, 96, 27);
-		comboBox.addItem("男");
-		comboBox.addItem("女");
 		panel.add(comboBox);
 		
 		JLabel label_2 = new JLabel("\u51FA\u751F\u65E5\u671F\uFF1A");
@@ -302,8 +286,6 @@ public class RegisterFrame extends JFrame {
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(95, 157, 96, 27);
-		comboBox_1.addItem("自费");
-		comboBox_1.addItem("医保");
 		panel.add(comboBox_1);
 		
 		JLabel label_6 = new JLabel("\u5BB6\u5EAD\u4F4F\u5740\uFF1A");
@@ -316,8 +298,6 @@ public class RegisterFrame extends JFrame {
 		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(95, 204, 96, 27);
-		comboBox_2.addItem("普通");
-		comboBox_2.addItem("专家");
 		panel.add(comboBox_2);
 		
 		JLabel label_8 = new JLabel("\u6302\u53F7\u79D1\u5BA4\uFF1A");
@@ -325,40 +305,15 @@ public class RegisterFrame extends JFrame {
 		panel.add(label_8);
 		
 		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				String officeName=(String)e.getItem();
-				if(officeName.equals("请选择科室")) {
-				}else {
-					comboBox_4.removeAllItems();
-					comboBox_4.addItem("请选择医生");
-					for(Office office:offices.getOffices()) {
-						if(office.getName().equals(officeName)) {
-							for(Doctor doctor:office.getDoctors()) {
-								if(doctor.onWork()) {
-									comboBox_4.addItem(doctor.getName());
-								}
-							}
-							break;
-						}
-					}
-				}
-			}
-		});
 		comboBox_3.setBounds(349, 204, 96, 27);
-		comboBox_3.addItem("请选择科室");
-		for(Office office:offices.getOffices()) {
-			comboBox_3.addItem(office.getName());
-		}
 		panel.add(comboBox_3);
 		
 		JLabel lblNewLabel_1 = new JLabel("\u770B\u8BCA\u533B\u751F\uFF1A");
 		lblNewLabel_1.setBounds(0, 255, 96, 21);
 		panel.add(lblNewLabel_1);
 		
-		comboBox_4 = new JComboBox();
+		JComboBox comboBox_4 = new JComboBox();
 		comboBox_4.setBounds(95, 252, 96, 27);
-		comboBox_4.addItem("请选择医生");
 		panel.add(comboBox_4);
 		
 		JRadioButton radioButton = new JRadioButton("\u75C5\u5386\u672C");
@@ -374,39 +329,8 @@ public class RegisterFrame extends JFrame {
 		panel.add(label_10);
 		
 		JButton button = new JButton("\u6302\u53F7");
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				int recordid=Integer.parseInt(textField.getText());
-				String name=textField_1.getText();
-				String sex=(String)comboBox.getSelectedItem();
-				int id=Integer.parseInt(textField_3.getText());
-				int age=Integer.parseInt(textField_5.getText());
-				String date=textField_4.getText();
-				Date birth=sdf.parse(date);
-				String wayToPay=(String)comboBox_1.getSelectedItem();
-				String address=textField_7.getText();
-				Boolean level;
-				if(((String)comboBox.getSelectedItem()).equals("专家")) {
-					level=true;
-				}else {
-					level=false;
-				}
-				String officeName=(String)comboBox_3.getSelectedItem();
-				Office office;
-				for(Office thisoffice:offices.getOffices()) {
-					if(thisoffice.getName().equals(officeName)) {
-						office=thisoffice;
-					}
-				}
-				for(Office thisoffice:offices.getOffices()) {
-					
-				}
-				registerSystem.register(registration);
-			}
-		});
 		button.setBounds(334, 290, 123, 29);
 		panel.add(button);
 	}
+
 }

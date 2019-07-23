@@ -14,6 +14,15 @@ public class RegistrationDataBase {
     	}  
     	return registrationDataBase;  
     }
+    public Object[][] displayRegistration(){
+    	Object[][] registrationInfo=new Object[registrations.size()][6];
+    	int i=0;
+    	for(Registration registration:registrations) {
+    		Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge(),registration.getDoctor().getName(),registration.getFinishMedicine(),registration.getFinishPay()};
+    		registrationInfo[i]=temp;
+    	}
+    	return registrationInfo;
+    }
     public void Save() {
     	SaveUtil.save(registrations,"c:/documents/registrationdata.txt");
     }

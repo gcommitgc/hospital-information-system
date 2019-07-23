@@ -7,6 +7,14 @@ import data.*;
 
 public class RegisterSystem {
 
+	private static RegisterSystem registerSystem;
+	private RegisterSystem() {}
+	public synchronized static RegisterSystem getInstance() {
+		if(registerSystem==null) {
+			registerSystem=new RegisterSystem();
+		}
+		return registerSystem;
+	}
 	OfficeDataBase offices=OfficeDataBase.getInstance();
 	RegistrationDataBase registrations=RegistrationDataBase.getInstance();
 	public void register(Registration registration) {

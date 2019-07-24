@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
@@ -88,7 +89,6 @@ public class AdminFrame extends JFrame {
 		panel.setBounds(0, 29, 690, 544);
 		panel.setVisible(false);
 		contentPane.add(panel);
-		panel.setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 722, 31);
@@ -114,10 +114,11 @@ public class AdminFrame extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(39, 23, 122, 27);
 		comboBox.addItem("请选择科室");
-		OfficeDataBase offices=OfficeDataBase.getInstance();
-		for(Office office:offices.getOffices()) {
-			comboBox.addItem(office.getName());
+		ArrayList<String> officeNames=adminSystem.getOfficeNames();
+		for(String officeName:officeNames) {
+			comboBox.addItem(officeName);
 		}
+		panel.setLayout(null);
 		panel.add(comboBox);
 						
 		JComboBox comboBox_1 = new JComboBox();
@@ -132,19 +133,16 @@ public class AdminFrame extends JFrame {
 				}else {
 					comboBox_1.removeAllItems();
 					comboBox_1.addItem("请选择医生");
-					for(Office office:offices.getOffices()) {
-						if(office.getName().equals(officeName)) {
-							for(Doctor doctor:office.getDoctors()) {
-								comboBox_1.addItem(doctor.getName());
-							}
-							break;
-						}
+					ArrayList<String> doctorNames=adminSystem.getDoctorNames(officeName);
+					for(String doctorName:doctorNames) {
+						comboBox_1.addItem(doctorName);
 					}
 				}
 			}
 		});
 		
 		textField = new JTextField();
+		textField.setBounds(354, 23, 153, 27);
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -167,12 +165,12 @@ public class AdminFrame extends JFrame {
 				}
 			}
 		});
-		textField.setBounds(354, 23, 153, 27);
 		textField.setText("(\u8BF7\u8F93\u5165\u4E0A\u73ED\u65F6\u95F4)");
 		panel.add(textField);
 		textField.setColumns(10);
 						
 		textField_1 = new JTextField();
+		textField_1.setBounds(522, 23, 153, 27);
 		textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -195,7 +193,6 @@ public class AdminFrame extends JFrame {
 				}
 			}
 		});
-		textField_1.setBounds(522, 23, 153, 27);
 		textField_1.setText("(\u8BF7\u8F93\u5165\u4E0B\u73ED\u65F6\u95F4)");
 		panel.add(textField_1);
 		textField_1.setColumns(10);
@@ -217,6 +214,7 @@ public class AdminFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton button = new JButton("\u6392\u73ED");
+		button.setBounds(586, 77, 69, 29);
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -236,7 +234,6 @@ public class AdminFrame extends JFrame {
 				}
 			}
 		});
-		button.setBounds(586, 77, 69, 29);
 		panel.add(button);
 		
 		JMenuItem menuItem = new JMenuItem("\u6392\u73ED");
@@ -263,15 +260,18 @@ public class AdminFrame extends JFrame {
 		panel_1.setBounds(0, 29, 690, 544);
 		panel_1.setVisible(false);
 		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(15, 5, 675, 429);
 		panel_1.add(scrollPane_1);
 		
-//		RegistrationDataBase registration=RegistrationDataBase.getInstance();
-//		Object[] schedulHead_1= {"病历号","姓名","年龄","医师","是否开药","是否缴费"};
-//		Object[][] schedulBody_1= registration.displayRegistration();
-//		DefaultTableModel tableModel_1=new DefaultTableModel(schedulBody_1,schedulHead_1);
-//		table_1 = new JTable();
-//		scrollPane_1.add(table_1);
+		Object[] schedulHead_1= {"病历号","姓名","年龄","医师","是否开药","是否缴费"};
+		Object[][] schedulBody_1= adminSystem.displayRegistration();
+		DefaultTableModel tableModel_1=new DefaultTableModel(schedulBody_1,schedulHead_1);
+		table_1 = new JTable(tableModel_1);
+		table_1.setRowHeight(40);
+		table_1.setFont(new Font("宋体",Font.PLAIN,18));
+		scrollPane_1.setViewportView(table_1);
 	}
 }

@@ -2,6 +2,7 @@ package logic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import data.*;
@@ -18,6 +19,7 @@ public class AdminSystem {
     	return adminSystem;  
     }
 	OfficeDataBase offices=OfficeDataBase.getInstance();
+	RegistrationDataBase registrations=RegistrationDataBase.getInstance();
 	public String setSchedul(String doctorString,String startDateString,String endDateString) {
 		Doctor doctor=null;
 		Date startDate=null;
@@ -42,6 +44,7 @@ public class AdminSystem {
 		offices.Save();
 		return "done";
 	}
+	
 	public Object[][] displaySchedul(){
 		int doctorAmount=0;
 		int i=0;
@@ -66,4 +69,30 @@ public class AdminSystem {
 		}
 		return schedul;
 	}
+	
+	public ArrayList<String> getOfficeNames(){
+		return offices.getOfficeNames();
+	}
+	public ArrayList<String> getDoctorNames(String officeName){
+		ArrayList<String> doctorNames=new ArrayList<>();
+		for(Office office:offices.getOffices()) {
+			if(office.getName().equals(officeName)) {
+				for(Doctor doctor:office.getDoctors()) {
+					doctorNames.add(doctor.getName());	
+				}
+				break;
+			}
+		}
+		return doctorNames;
+	}
+	public Object[][] displayRegistration(){
+    	Object[][] registrationInfo=new Object[registrations.getRegistrations().size()][6];
+    	int i=0;
+    	for(Registration registration:registrations.getRegistrations()) {
+    		Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge(),registration.getDoctor().getName(),registration.getFinishMedicine(),registration.getFinishPay()};
+    		registrationInfo[i]=temp;
+    		i++;
+    	}
+    	return registrationInfo;
+    }
 }

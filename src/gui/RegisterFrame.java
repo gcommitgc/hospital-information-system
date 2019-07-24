@@ -16,6 +16,7 @@ import logic.RegisterSystem;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -23,7 +24,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -31,11 +34,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class RegisterFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JLabel textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
 	private JTextField textField_4;
@@ -49,6 +54,8 @@ public class RegisterFrame extends JFrame {
 	private JTextField textField_6;
 	private JTextField textField_8;
 	JComboBox comboBox_4;
+	JLabel label_10;
+	JComboBox comboBox_3;
 
 	/**
 	 * Launch the application.
@@ -71,7 +78,6 @@ public class RegisterFrame extends JFrame {
 	 */
 	public RegisterFrame() {
 		RegisterSystem registerSystem=RegisterSystem.getInstance();
-		OfficeDataBase offices=OfficeDataBase.getInstance();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -136,7 +142,7 @@ public class RegisterFrame extends JFrame {
 		panel_2_1.add(btnNewButton_1);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 519, 31);
+		menuBar.setBounds(0, 0, 535, 31);
 		contentPane.add(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("\u529F\u80FD");
@@ -206,7 +212,6 @@ public class RegisterFrame extends JFrame {
 		
 		panel = new JPanel();
 		panel.setBounds(0, 34, 519, 324);
-		panel.setVisible(false);
 		
 		panel_1_1 = new JPanel();
 		panel_1_1.setBounds(0, 34, 519, 324);
@@ -226,20 +231,34 @@ public class RegisterFrame extends JFrame {
 		textField_2.setColumns(10);
 		
 		JButton btnNewButton = new JButton("\u9000\u53F7");
-		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 22));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String recordidString=textField_2.getText();
+				String messege=registerSystem.withdraw(recordidString);
+				switch(messege) {
+				case"wrong":
+					JOptionPane.showMessageDialog(null, "请按格式输入", "错误", 0);
+					break;
+				case"lack":
+					JOptionPane.showMessageDialog(null, "无此病历号", "错误", 0);
+					break;
+				case"done":
+					JOptionPane.showMessageDialog(null, "退号成功", "提示",JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		});
+		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 22));
 		btnNewButton.setBounds(172, 215, 150, 58);
 		panel_1_1.add(btnNewButton);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		textField = new JTextField();
+		String displayid=String.valueOf(registerSystem.getRecordid());
+		textField = new JLabel(displayid);
 		textField.setBounds(95, 31, 96, 27);
 		panel.add(textField);
-		textField.setColumns(10);
+//		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(349, 31, 96, 27);
@@ -251,7 +270,25 @@ public class RegisterFrame extends JFrame {
 		panel.add(textField_3);
 		textField_3.setColumns(10);
 		
-		textField_4 = new JTextField();
+		textField_4 = new JTextField("（格式：yyyy-MM-dd）");
+		textField_4.addInputMethodListener(new InputMethodListener() {
+			public void caretPositionChanged(InputMethodEvent arg0) {
+			}
+			public void inputMethodTextChanged(InputMethodEvent arg0) {
+				String age=registerSystem.getAge(textField_4.getText());
+				if(age.equals("")) {
+					
+				}else {
+					textField_5.setText(age);
+				}
+			}
+		});
+		textField_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textField_4.setText("");
+			}
+		});
 		textField_4.setBounds(303, 115, 201, 27);
 		panel.add(textField_4);
 		textField_4.setColumns(10);
@@ -318,13 +355,39 @@ public class RegisterFrame extends JFrame {
 		comboBox_2.setBounds(95, 204, 96, 27);
 		comboBox_2.addItem("普通");
 		comboBox_2.addItem("专家");
+		comboBox_2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(comboBox_3.getSelectedItem().equals("请选择科室")) {
+					
+				}else {
+					String officeName=(String)comboBox_3.getSelectedItem();
+					comboBox_4.removeAllItems();
+					comboBox_4.addItem("请选择医生");
+					Boolean level;
+					if(((String)comboBox_2.getSelectedItem()).equals("专家")) {
+						level=true;
+					}else {
+						level=false;
+					}
+					ArrayList<String> doctorNames=registerSystem.getDoctorNames(officeName,level);
+					for(String doctorName:doctorNames) {
+						comboBox_4.addItem(doctorName);
+					}
+				}
+				if(comboBox_2.getSelectedItem().equals("普通")) {
+					label_10.setText(String.valueOf(Integer.parseInt(label_10.getText())-25));
+				}else {
+					label_10.setText(String.valueOf(Integer.parseInt(label_10.getText())+25));
+				}
+			}
+		});
 		panel.add(comboBox_2);
 		
 		JLabel label_8 = new JLabel("\u6302\u53F7\u79D1\u5BA4\uFF1A");
 		label_8.setBounds(246, 207, 96, 21);
 		panel.add(label_8);
 		
-		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3 = new JComboBox();
 		comboBox_3.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				String officeName=(String)e.getItem();
@@ -332,23 +395,24 @@ public class RegisterFrame extends JFrame {
 				}else {
 					comboBox_4.removeAllItems();
 					comboBox_4.addItem("请选择医生");
-					for(Office office:offices.getOffices()) {
-						if(office.getName().equals(officeName)) {
-							for(Doctor doctor:office.getDoctors()) {
-								if(doctor.onWork()) {
-									comboBox_4.addItem(doctor.getName());
-								}
-							}
-							break;
-						}
+					Boolean level;
+					if(((String)comboBox_2.getSelectedItem()).equals("专家")) {
+						level=true;
+					}else {
+						level=false;
+					}
+					ArrayList<String> doctorNames=registerSystem.getDoctorNames(officeName,level);
+					for(String doctorName:doctorNames) {
+						comboBox_4.addItem(doctorName);
 					}
 				}
 			}
 		});
 		comboBox_3.setBounds(349, 204, 96, 27);
 		comboBox_3.addItem("请选择科室");
-		for(Office office:offices.getOffices()) {
-			comboBox_3.addItem(office.getName());
+		ArrayList<String> officeNames=registerSystem.getOfficeNames();
+		for(String officeName:officeNames) {
+			comboBox_3.addItem(officeName);
 		}
 		panel.add(comboBox_3);
 		
@@ -362,6 +426,15 @@ public class RegisterFrame extends JFrame {
 		panel.add(comboBox_4);
 		
 		JRadioButton radioButton = new JRadioButton("\u75C5\u5386\u672C");
+		radioButton.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(radioButton.isSelected()) {
+					label_10.setText(String.valueOf(Integer.parseInt(label_10.getText())+1));
+				}else {
+					label_10.setText(String.valueOf(Integer.parseInt(label_10.getText())-1));
+				}
+			}
+		});
 		radioButton.setBounds(359, 251, 177, 29);
 		panel.add(radioButton);
 		
@@ -369,7 +442,7 @@ public class RegisterFrame extends JFrame {
 		label_9.setBounds(0, 294, 96, 21);
 		panel.add(label_9);
 		
-		JLabel label_10 = new JLabel("");
+		label_10 = new JLabel("50");
 		label_10.setBounds(95, 294, 91, 21);
 		panel.add(label_10);
 		
@@ -377,33 +450,49 @@ public class RegisterFrame extends JFrame {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				int recordid=Integer.parseInt(textField.getText());
+				String recordidString=textField.getText();
 				String name=textField_1.getText();
 				String sex=(String)comboBox.getSelectedItem();
-				int id=Integer.parseInt(textField_3.getText());
-				int age=Integer.parseInt(textField_5.getText());
+				String idString=textField_3.getText();
+				String ageString=textField_5.getText();
 				String date=textField_4.getText();
-				Date birth=sdf.parse(date);
 				String wayToPay=(String)comboBox_1.getSelectedItem();
 				String address=textField_7.getText();
 				Boolean level;
-				if(((String)comboBox.getSelectedItem()).equals("专家")) {
+				double money=Integer.parseInt(label_10.getText());
+				if(((String)comboBox_2.getSelectedItem()).equals("专家")) {
 					level=true;
 				}else {
 					level=false;
 				}
 				String officeName=(String)comboBox_3.getSelectedItem();
-				Office office;
-				for(Office thisoffice:offices.getOffices()) {
-					if(thisoffice.getName().equals(officeName)) {
-						office=thisoffice;
-					}
+				String doctorName=(String)comboBox_4.getSelectedItem();
+				Boolean needRecordBook=radioButton.isSelected();
+				String messege=registerSystem.register(recordidString,name,sex,idString,ageString,date,wayToPay,address,level,officeName,doctorName,needRecordBook,money);
+				switch(messege){
+					case "done":
+						JOptionPane.showMessageDialog(null, "挂号成功", "提示",JOptionPane.PLAIN_MESSAGE);
+						textField.setText(String.valueOf(registerSystem.getRecordid()));
+						textField_1.setText("");
+						comboBox.setSelectedItem("男");
+						textField_3.setText("");
+						textField_5.setText("");
+						textField_4.setText("");
+						comboBox_1.setSelectedItem("自费");
+						textField_7.setText("");
+						comboBox_2.setSelectedItem("普通");
+						comboBox_3.setSelectedItem("请先选择科室");
+						comboBox_4.setSelectedItem("请选择医生");
+						radioButton.setSelected(false);
+						label_10.setText("50");
+						break;
+					case "wrong date":
+						JOptionPane.showMessageDialog(null, "请按格式输入时间", "错误", 0);
+						break;
+					case "lack":
+						JOptionPane.showMessageDialog(null, "请输入所有信息", "错误", 0);
+						break;
 				}
-				for(Office thisoffice:offices.getOffices()) {
-					
-				}
-				registerSystem.register(registration);
 			}
 		});
 		button.setBounds(334, 290, 123, 29);

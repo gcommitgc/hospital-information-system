@@ -47,7 +47,7 @@ public class DoctorSystem {
 		}
 		Object[][] unfinishedRegistration=new Object[unfinishedRegistrationAmount][3];
 		for(Registration registration:doctor.getRegistrations()) {
-			if(registration.getFinishMedicine()) {
+			if(!registration.getFinishMedicine()) {
 				Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge()};
 				unfinishedRegistration[i]=temp;
 				i++;

@@ -99,6 +99,9 @@ public class RegisterSystem {
 		return thisdoctor;
 	}
 	public int getRecordid(){
+		if(registrations.getRegistrations().size()==0) {
+			return 1;
+		}
 		int recordid=registrations.getRegistrations().get(registrations.getRegistrations().size()-1).getRecordid()+1;
 		return recordid;
 	}
@@ -132,7 +135,10 @@ public class RegisterSystem {
 		for(Office office:offices.getOffices()) {
 			for(Doctor doctor:office.getDoctors()) {
 				for(Registration registration:doctor.getRegistrations()) {
-					if(registration.getRecordid()==recordid) {
+					if(registration.getRecordid()==(int)recordid) {
+						if(registration.getFinishMedicine()) {
+							return "finished";
+						}
 						ArrayList<Registration> newRegistrations=doctor.getRegistrations();
 						newRegistrations.remove(registration);
 						doctor.setRegistrations(newRegistrations);

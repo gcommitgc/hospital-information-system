@@ -27,10 +27,10 @@ public class DoctorSystem {
 				finishedRegistrationAmount++;
 			}
 		}
-		Object[][] finishedRegistration=new Object[finishedRegistrationAmount][3];
+		Object[][] finishedRegistration=new Object[finishedRegistrationAmount][4];
 		for(Registration registration:doctor.getRegistrations()) {
 			if(registration.getFinishMedicine()) {
-				Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge()};
+				Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge(),registration.getSex()};
 				finishedRegistration[i]=temp;
 				i++;
 			}
@@ -45,10 +45,10 @@ public class DoctorSystem {
 				unfinishedRegistrationAmount++;
 			}
 		}
-		Object[][] unfinishedRegistration=new Object[unfinishedRegistrationAmount][3];
+		Object[][] unfinishedRegistration=new Object[unfinishedRegistrationAmount][4];
 		for(Registration registration:doctor.getRegistrations()) {
 			if(!registration.getFinishMedicine()) {
-				Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge()};
+				Object[] temp= {registration.getRecordid(),registration.getName(),registration.getAge(),registration.getSex()};
 				unfinishedRegistration[i]=temp;
 				i++;
 			}
@@ -59,12 +59,14 @@ public class DoctorSystem {
 		registrations.getRegistrations().get(registrations.getRegistrations().indexOf(registration)).setDiagnose(diagnose);
 		registrations.getRegistrations().get(registrations.getRegistrations().indexOf(registration)).setMedicines(medicines);
 		registrations.getRegistrations().get(registrations.getRegistrations().indexOf(registration)).setMoney(registrations.getRegistrations().get(registrations.getRegistrations().indexOf(registration)).getMoney()+medicines.getPrice());
+		registrations.Save();
 		int officeLocation=offices.getOffices().indexOf(doctor.getOffice());
 		int doctorLocation=offices.getOffices().get(officeLocation).getDoctors().indexOf(doctor);
 		int registrationLocation=offices.getOffices().get(officeLocation).getDoctors().get(doctorLocation).getRegistrations().indexOf(registration);
 		offices.getOffices().get(officeLocation).getDoctors().get(doctorLocation).getRegistrations().get(registrationLocation).setDiagnose(diagnose);
 		offices.getOffices().get(officeLocation).getDoctors().get(doctorLocation).getRegistrations().get(registrationLocation).setMedicines(medicines);
 		offices.getOffices().get(officeLocation).getDoctors().get(doctorLocation).getRegistrations().get(registrationLocation).setMoney(offices.getOffices().get(officeLocation).getDoctors().get(doctorLocation).getRegistrations().get(registrationLocation).getMoney()+medicines.getPrice());
+		offices.Save();
 		
 	}
 }

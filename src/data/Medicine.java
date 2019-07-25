@@ -6,10 +6,12 @@ public class Medicine implements Serializable{
 
 	private String name;
 	private double price;
+	private String discribe;
 
-	public Medicine(String name, double price) {
+	public Medicine(String name, double price,String discribe) {
 		this.name = name;
 		this.price = price;
+		this.discribe=discribe;
 	}
 
 	public String getName() {
@@ -26,6 +28,14 @@ public class Medicine implements Serializable{
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public String getDiscribe() {
+		return discribe;
+	}
+
+	public void setDiscribe(String discribe) {
+		this.discribe = discribe;
 	}
 	
 }

@@ -8,6 +8,22 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		Medicine m1=new Medicine("红花",20,"似乎能使人精神的东西");
+		Medicine m2=new Medicine("蓝花",20,"似乎能使人冷静的东西");
+		Medicine m3=new Medicine("糖",2,"似乎没什么用但是很甜");
+		Medicine m4=new Medicine("黄莲",50,"似乎有作用但是很苦");
+		Medicine m5=new Medicine("可乐",3,"毫无作用但是很快乐");
+		Medicine m6=new Medicine("大碗宽面",15,"吃完就会rap的神奇食物");
+		Medicine m7=new Medicine("烤面筋",3,"可以让你尝到真正的石灰");
+		ArrayList<Medicine> medicines=new ArrayList<Medicine>();
+		medicines.add(m1);
+		medicines.add(m2);
+		medicines.add(m3);
+		medicines.add(m4);
+		medicines.add(m5);
+		medicines.add(m6);
+		medicines.add(m7);
+		SaveUtil.save(medicines,"c:/documents/medicinedata.txt");
 //		Office waike=new Office("外科");
 //		Office neike=new Office("内科");
 //		Office erke=new Office("儿科");
@@ -106,10 +122,10 @@ public class test {
 //		accountAndUser.put("kora","卡拉");
 //		SaveUtil.save(accountAndPassword,"c:/documents/account.txt");
 //		SaveUtil.save(accountAndUser,"c:/documents/user.txt");
-		OfficeDataBase officeDataBase=OfficeDataBase.getInstance();
-		Account account=Account.getInstance();
-		System.out.println(OfficeDataBase.getOffices().get(3).getDoctors().get(0).getName());
-		System.out.println(account.getAccountAndPassword().get("hanser"));
+//		OfficeDataBase officeDataBase=OfficeDataBase.getInstance();
+//		Account account=Account.getInstance();
+//		System.out.println(OfficeDataBase.getOffices().get(3).getDoctors().get(0).getName());
+//		System.out.println(account.getAccountAndPassword().get("hanser"));
 //		@SuppressWarnings("unchecked")
 //		ArrayList<Doctor> doctorss=(ArrayList<Doctor>)ReadUtil.read("c:/documents/doctordata.txt");
 //		System.out.println(doctorss.get(0).getName()+doctorss.get(1).getName()+doctorss.get(0).getOffice());

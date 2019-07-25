@@ -86,18 +86,20 @@ public class AdminFrame extends JFrame {
         this.setLocation(screenWidth/2-windowWidth/2, screenHeight/2-windowHeight/2);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 29, 690, 544);
+		panel.setBounds(0, 49, 690, 406);
 		panel.setVisible(false);
 		contentPane.add(panel);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 722, 31);
+		menuBar.setBounds(0, 0, 722, 48);
 		contentPane.add(menuBar);
 						
 		JMenu menu = new JMenu("\u529F\u80FD");
+		menu.setFont(new Font("华文宋体", Font.PLAIN, 20));
 		menuBar.add(menu);
 						
 	    JMenu menu_1 = new JMenu("\u8D26\u6237");
+	    menu_1.setFont(new Font("华文宋体", Font.PLAIN, 20));
 		menuBar.add(menu_1);
 						
 		JMenuItem menuItem_2 = new JMenuItem("\u9000\u51FA\u767B\u5F55");
@@ -202,7 +204,7 @@ public class AdminFrame extends JFrame {
 		panel.add(lblyy);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 121, 644, 312);
+		scrollPane.setBounds(31, 121, 644, 285);
 		panel.add(scrollPane);
 		
 		Object[] schedulHead= {"科室","姓名","开始时间","结束时间"};
@@ -257,7 +259,7 @@ public class AdminFrame extends JFrame {
 		menu.add(menuItem_1);
 		
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 29, 690, 544);
+		panel_1.setBounds(0, 49, 690, 524);
 		panel_1.setVisible(false);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
